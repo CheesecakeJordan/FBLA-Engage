@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FBLA Member App</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --blue: #1E3A8A;
+  --violet: #7F3FBF;
+  --gold: #FFD700;
+  --white: #ffffff;
+  --bg-light: #f2f2f2;
+  --card-bg: #ffffff;
+  --shadow: rgba(0,0,0,0.15);
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  transition: 0.3s;
+  background-color: var(--bg-light);
+  color: var(--blue);
+  text-align:center;
+}
+.container {
+  max-width:700px;
+  margin:auto;
+  padding:1rem;
+}
+header {
+  background: linear-gradient(-45deg,var(--blue),var(--violet),var(--gold));
+  color:white;
+  text-align:center;
+  padding:1rem;
+  border-radius:10px 10px 0 0;
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+header img {
+  height: 40px;
+  margin-right: 10px;
+}
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+.card {
+  background: var(--card-bg);
+  border-radius:15px;
+  padding:1rem;
+  margin:1rem auto;
+  max-width:90%;
+  box-shadow:0 8px 20px var(--shadow);
+  transition:0.3s;
+  text-align:center;
+}
+.card:hover { transform: translateY(-3px); }
+button {
+  padding:0.6rem 1rem;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+button.primary {
+  background: var(--blue);
+  color:white;
+}
+button.primary:hover {
+  background: var(--gold);
+  color: var(--blue);
+}
+button.social {
+  margin:0.3rem;
+  background: linear-gradient(90deg,var(--blue),var(--gold));
+  color:white;
+}
+button.social:hover {
+  background: linear-gradient(90deg,var(--gold),var(--blue));
+}
+#loginPage {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background-color: var(--bg-light);
+}
+#loginPage .card {
+  width:90%;
+  max-width:400px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+#loginPage input, #loginPage select {
+  display:block;
+  width:85%;
+  margin:0.6rem auto;
+  padding:0.7rem;
+  border-radius:10px;
+  border:1px solid #ccc;
+  outline:none;
+  text-align:center;
+}
+#loginPage input:focus { border-color: var(--blue); box-shadow:0 0 5px var(--blue); }
+#loginPage button { margin-top:1rem; }
+nav {
+  display:flex;
+  justify-content:space-around;
+  background-color: var(--gold);
+  padding:0.7rem 0;
+  margin-bottom:1rem;
+  border-radius:10px;
+  flex-wrap:wrap;
+}
+nav a {
+  text-decoration:none;
+  color: var(--blue);
+  font-weight:bold;
+  transition:0.3s;
+}
+nav a:hover {
+  color: var(--violet);
+  transform:scale(1.1);
+}
+.member-profile {
+  border:2px solid var(--blue);
+  border-radius:10px;
+  padding:1rem;
+  margin-bottom:1rem;
+  cursor:pointer;
+  text-align:center;
+  transition:0.3s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.member-profile img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+.member-profile:hover { transform: scale(1.02); background:#f9f9f9; }
+.member-profile span.name { font-weight:bold; color:var(--violet); cursor:pointer; margin-bottom:0.3rem; }
+.badge { background: var(--gold); color: var(--blue); padding:2px 6px; border-radius:5px; font-size:0.8rem; }
+/* STORIES CAROUSEL */
+.carousel-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 10px 0;
+  scrollbar-width: none;
+  justify-content: flex-start;
+}
+.carousel-container::-webkit-scrollbar { display: none; }
+.story-card {
+  min-width: 180px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 20px 10px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+  border: 2px solid var(--blue);
+  cursor: pointer;
+}
+.story-card img {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 3px solid var(--gold);
+}
+.caption {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: var(--blue);
+  font-weight: bold;
+}
+.share-btn {
+  background: var(--violet);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.share-btn:hover { background: var(--gold); color: var(--blue); }
+.share-icons {
+  display: none;
+  margin-top: 10px;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.share-icons a {
+  display: inline-flex;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 16px;
+}
+.share-icons a.whatsapp { background: #25D366; }
+.share-icons a.imessage { background: #34C759; }
+.share-icons a.instagram { background: #E1306C; }
+.share-icons a.facebook { background: #3b5998; }
+.share-icons a.twitter { background: #1DA1F2; }
+/* CALENDAR */
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 320px;
+  margin-bottom: .8rem;
+}
+.calendar-nav button {
+  background: var(--gold);
+  color: var(--blue);
+  border: none;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: .2s;
+}
+.calendar-nav button:hover {
+  background: var(--violet);
+  color: white;
+}
+#monthLabel {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--violet);
+}
+.calendar {
+  width: 100%;
+  max-width: 340px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--card-bg);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px var(--shadow);
+}
+.calendar th {
+  background: var(--violet);
+  color: white;
+  padding: .7rem .4rem;
+  font-weight: 600;
+  font-size: .95rem;
+}
+.calendar td {
+  height: 44px;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  transition: background .2s;
+}
+.calendar td:not(.event):hover { background: #f0f4ff; }
+.calendar td.event {
+  background: var(--gold);
+  color: var(--blue);
+  font-weight: 600;
+  cursor: pointer;
+}
+.calendar td.event:hover {
+  background: var(--blue);
+  color: var(--gold);
+}
+.calendar td.event::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.8);
+  color: white;
+  padding: .4rem .6rem;
+  border-radius: 6px;
+  font-size: .8rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+  z-index: 10;
+}
+.calendar td.event:hover::after { opacity: 1; }
+.calendar td.today {
+  background: var(--blue) !important;
+  color: white !important;
+  font-weight: 700;
+}
+/* UPDATES */
+#updateBox {
+  border: 2px solid var(--violet);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-top: 1rem;
+  background: var(--card-bg);
+  box-shadow: 0 4px 10px var(--shadow);
+}
+#updateList {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+#updateList li {
+  background: #f8f9fa;
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  padding: 0.7rem;
+  margin: 0.6rem 0;
+  box-shadow: 0 2px 6px var(--shadow);
+  transition: 0.3s;
+  font-size: 0.95rem;
+}
+#updateList li:hover {
+  background: var(--gold);
+  color: var(--blue);
+  transform: translateY(-2px);
+}
+#linkList li {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ccc;
+}
+/* HOME BUTTONS */
+.home-buttons {
+  text-align: center;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.home-buttons button { margin: 0 auto; }
+/* MODALS */
+.modal { display:none; position:fixed; z-index:200; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.7); justify-content:center; align-items:center; }
+.modal-content { background: var(--card-bg); border-radius:15px; padding:2rem; width:90%; max-width:400px; position:relative; text-align:center; }
+.close { position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; color:#aaa; }
+.close:hover { color:#000; }
+#storyModal .modal-content {
+  position: relative;
+  padding: 2rem 3rem;
+}
+#storyModal button.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--blue);
+  cursor: pointer;
+}
+#storyModal button.nav-btn:hover {
+  color: var(--gold);
+}
+#storyModal #prevStoryBtn { left: 10px; }
+#storyModal #nextStoryBtn { right: 10px; }
+/* WELCOME MODAL */
+#welcomeModal .modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#welcomeModal img.logo {
+  height: 60px;
+  margin-bottom: 1rem;
+}
+#welcomeModal img.user-pic {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+/* INBOX */
+.inbox-message {
+  background: #f9f9f9;
+  border: 1px solid var(--blue);
+  border-radius: 8px;
+  padding: 0.6rem;
+  margin: 0.5rem 0;
+  position: relative;
+  text-align: left;
+  padding-right: 80px;
+}
+.inbox-message .reply-btn {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: var(--gold);
+  color: var(--blue);
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.inbox-message .reply-btn:hover { background: var(--violet); color: white; }
+/* DARK MODE */
+.dark-mode { background-color:#1E1E2F; color:white; }
+.dark-mode .card, .dark-mode #updateBox, .dark-mode .story-card { background:#2C2C3C; color:white; }
+.dark-mode nav { background:#FFD700; color:#1E3A8A; }
+.dark-mode .member-profile { border-color:#FFD700; color: white; }
+.dark-mode .badge { background:#FFD700; color:#1E3A8A; }
+.dark-mode .calendar th { background:#1E3A8A; color:#FFD700; }
+.dark-mode button.social { background: linear-gradient(90deg, #FFD700, #1E3A8A); }
+.dark-mode button.primary { background: #FFD700; color:#1E3A8A; }
+.dark-mode .calendar td { color: white; }
+.dark-mode .calendar td.event { color: var(--blue); }
+.dark-mode .inbox-message { background: #333; color: white; }
+.dark-mode #updateList li { background: #444; color: white; border-color: var(--gold); }
+.dark-mode body { color: white; }
+.dark-mode a { color: var(--gold); }
+.inbox-icon { position: fixed; right: 20px; bottom: 80px; font-size: 36px; cursor: pointer; color: var(--violet); background: var(--gold); padding: 10px; border-radius: 50%; box-shadow: 0 4px 10px var(--shadow); display: flex; justify-content: center; align-items: center; }
+.inbox-icon:hover { transform: scale(1.1); }
+#countdown { font-weight:bold; color:var(--violet); font-size:1.3rem; }
+</style>
+</head>
+<body>
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <header><img src="https://1000logos.net/wp-content/uploads/2017/08/FBLA-Logo.jpg" alt="FBLA Logo">FBLA Member App</header>
+  <div class="card">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <select id="role">
+      <option value="member">Member</option>
+      <option value="officer">Officer</option>
+    </select>
+    <button class="primary" onclick="login()">Login</button>
+  </div>
+</div>
+<!-- DASHBOARD -->
+<div id="dashboard" class="container" style="display:none;">
+  <header><img src="https://1000logos.net/wp-content/uploads/2017/08/FBLA-Logo.jpg" alt="FBLA Logo">FBLA Dashboard <span style="float:right;cursor:pointer;" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></span></header>
+  <nav>
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('profiles')">Profiles</a>
+    <a href="#" onclick="showSection('calendar')">Calendar</a>
+    <a href="#" onclick="showSection('resources')">Resources</a>
+    <a href="#" onclick="showSection('social')">Social</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </nav>
+  <!-- HOME -->
+  <section id="home" class="card">
+    <h2>Home</h2>
+    <div>
+      <h3>Stories</h3>
+      <div class="carousel-container" id="storiesContainer"></div>
+      <div class="home-buttons">
+        <button class="primary" id="addStoryBtn" style="display:none;" onclick="officerAddStory()">Add Story</button>
+      </div>
+    </div>
+    <div id="latestUpdates">
+      <h3>Latest Updates</h3>
+            <div id="updateBox">
+        <ul id="updateList"></ul>
+        <div class="home-buttons">
+          <button class="primary" id="addUpdateBtn" style="display:none;" onclick="officerAddUpdate()">Add Update</button>
+        </div>
+        <ul id="linkList" style="list-style:none; padding:0; margin-top:1rem; font-size:0.9rem;">
+          <li>Official Website: <a href="https://www.fbla.org/" target="_blank">Visit</a></li>
+          <li>Events: <a href="https://www.fbla.org/high-school/competitive-events/?_event_type=individual-team" target="_blank">View</a></li>
+          <li>Guidelines: <a href="https://connect.fbla.org/headquarters/files/High%20School%20Competitive%20Events%20Resources/25-26-High-School-Guidelines-All-in-One.pdf" target="_blank">Download</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="reminderSection">
+      <h3>Reminders</h3>
+      <ul id="reminderList" style="list-style:none; padding:0;"></ul>
+    </div>
+    <div id="eventCountdownSection">
+      <h3>Upcoming Event Countdown</h3>
+      <div id="countdownEvent"><a href="#" onclick="showSection('calendar')">Loading...</a></div>
+      <div id="countdown">Loading...</div>
+    </div>
+  </section>
+  <!-- PROFILES -->
+  <section id="profiles" class="card" style="display:none;">
+    <h2>Member Profiles</h2>
+    <div id="profileList"></div>
+  </section>
+  <!-- CALENDAR -->
+  <section id="calendar" class="card" style="display:none;">
+    <h2>Calendar</h2>
+    <div class="calendar-container">
+      <div class="calendar-nav">
+        <button onclick="prevMonth()"><i class="fas fa-chevron-left"></i></button>
+        <span id="monthLabel"></span>
+        <button onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div id="calendarContainer"></div>
+      <div class="home-buttons">
+        <button class="primary" id="addEventBtn" style="display:none; margin-top:1rem;" onclick="officerAddEvent()">Add Event</button>
+      </div>
+    </div>
+  </section>
+  <!-- RESOURCES -->
+  <section id="resources" class="card" style="display:none;">
+    <h2>FBLA Resources</h2>
+    <div class="card">
+      <h3>Policies</h3>
+      <a href="https://www.fbla.org/dress-code/" target="_blank">Dress Code</a><br>
+      <a href="https://www.fbla.org/codeofconduct/" target="_blank">Code of Conduct</a><br>
+      <a href="https://www.fbla.org/honor-code/" target="_blank">Honor Code</a>
+    </div>
+    <div class="card">
+      <h3>Competition Resources</h3>
+      <a href="https://connect.fbla.org/headquarters/files/High%20School%20Competitive%20Events%20Resources/25-26-High-School-CE-Event-Descriptions.pdf" target="_blank">Event Descriptions</a><br>
+      <a href="https://www.fbla.org/high-school/competitive-events/#fbla-ce-resources" target="_blank">Competitive Events</a>
+    </div>
+  </section>
+  <!-- SOCIAL -->
+  <section id="social" class="card" style="display:none;">
+    <h2>Connect on Social Media</h2>
+    <button class="social" onclick="window.open('https://www.facebook.com/groups/156514977758687/','_blank')">Facebook</button>
+    <button class="social" onclick="window.open('https://x.com/texas_fbla?lang=en','_blank')">Twitter</button>
+    <button class="social" onclick="window.open('https://www.instagram.com/texasfbla/?hl=en','_blank')">Instagram</button>
+  </section>
+  <div class="inbox-icon" onclick="openInbox()"><i class="fas fa-envelope"></i></div>
+</div>
+<!-- MODALS -->
+<div id="memberModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <h3 id="modalName"></h3>
+    <p id="modalRole"></p>
+    <p id="modalGrade"></p>
+    <p id="modalEmail"></p>
+  </div>
+</div>
+<div id="storyModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeStory()">×</span>
+    <h3 id="storyTitle"></h3>
+    <p id="storyContent"></p>
+    <button class="nav-btn" id="prevStoryBtn" onclick="prevStory()"><i class="fas fa-chevron-left"></i></button>
+    <button class="nav-btn" id="nextStoryBtn" onclick="nextStory()"><i class="fas fa-chevron-right"></i></button>
+  </div>
+</div>
+<div id="eventModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeEventModal()">×</span>
+    <h3>Event Details</h3>
+    <p id="eventDetails"></p>
+  </div>
+</div>
+<div id="welcomeModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeWelcomeModal()">×</span>
+    <img class="logo" src="https://1000logos.net/wp-content/uploads/2017/08/FBLA-Logo.jpg" alt="FBLA Logo">
+    <img id="welcomeUserPic" class="user-pic" src="" alt="User">
+    <h3 id="welcomeName"></h3>
+    <p id="welcomeRole"></p>
+  </div>
+</div>
+<!-- INBOX -->
+<div id="inboxPage" class="container" style="display:none;">
+  <header>Inbox <span style="float:right;cursor:pointer;" onclick="backToHome()">Back</span></header>
+  <div class="card">
+    <div id="inboxList"></div>
+    <input type="text" id="inboxInput" placeholder="Type your message...">
+    <button class="primary" onclick="sendInboxMessage()">Send</button>
+  </div>
+</div>
+<script>
+let currentUser = null;
+let currentMonth = new Date();
+let currentStoryIndex = 0;
+let stories = JSON.parse(localStorage.getItem('stories')) || [
+  { title: "Regionals Are Here!", content: "Our chapter qualified for Regionals! Practice your events and bring your A-game!", image: "https://www.fbla.org/media/2024/10/FBLA-Collegiate-Excellence-Awards.jpg" },
+  { title: "Officer Elections", content: "Nominations open next week. Run for a leadership role and make a difference!", image: "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3601234749483738829" },
+  { title: "Community Service", content: "Join us this Saturday for the food drive at Central Park!", image: "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3745698067354771545" }
+];
+let updates = JSON.parse(localStorage.getItem('updates')) || [
+  "Regionals registration deadline: Dec 15",
+  "State Conference: March 10-12, 2026",
+  "New competitive event: Coding & Programming",
+  "Officer meeting rescheduled to Friday"
+];
+let messages = JSON.parse(localStorage.getItem('messages')) || [];
+let calendarEvents = JSON.parse(localStorage.getItem('calendarEvents')) || [
+  { date: "2025-12-15", event: "Regionals Registration Deadline" },
+  { date: "2026-01-10", event: "Regional Competition" },
+  { date: "2026-02-05", event: "State Qualifier Prep" },
+  { date: "2026-03-10", event: "State Conference Begins" },
+  { date: "2026-03-12", event: "State Awards Ceremony" },
+  { date: "2026-04-01", event: "National Leadership Conference" }
+];
+let users = [
+  {username:"officer1",password:"admin123",role:"officer",name:"Alice Johnson",email:"alice.johnson@fbla.org", image: "https://img.freepik.com/premium-vector/professional-businesswoman-avatar-character-cartoon_1138841-25369.jpg"},
+  {username:"officer2",password:"secure456",role:"officer",name:"Bob Smith",email:"bob.smith@fbla.org", image: "https://www.shutterstock.com/image-illustration/animated-young-business-man-avatar-260nw-2574951085.jpg"},
+  {username:"member1",password:"pass123",role:"member",name:"Charlie Lee",email:"charlie.lee@fbla.org", image: "https://www.shutterstock.com/image-illustration/animated-young-business-man-avatar-260nw-2574951163.jpg"},
+  {username:"member2",password:"pass456",role:"member",name:"Dana Kim",email:"dana.kim@fbla.org", image: "https://static.vecteezy.com/system/resources/previews/017/369/833/non_2x/business-avatar-woman-icon-placeholder-casual-workman-cartoon-character-illustration-vector.jpg"},
+  {username:"member3",password:"pass789",role:"member",name:"Ethan Wright",email:"ethan.wright@fbla.org", image: "https://www.shutterstock.com/shutterstock/photos/2574951367/display_1500/stock-photo-animated-young-business-man-avatar-character-wearing-a-suit-d-male-office-worker-d-avatar-of-a-2574951367.jpg"}
+];
+/* LOGIN & NAV */
+function login(){
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const role = document.getElementById('role').value;
+  const user = users.find(u => u.username === username && u.password === password && u.role === role);
+  if(user){
+    currentUser = user;
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadHome(); loadProfiles(); generateCalendar(currentMonth); startCountdown();
+    if(user.role === 'officer'){
+      document.getElementById('addStoryBtn').style.display = 'block';
+      document.getElementById('addUpdateBtn').style.display = 'block';
+      document.getElementById('addEventBtn').style.display = 'block';
+    }
+    showWelcomeModal(user);
+  } else alert('Invalid credentials!');
+}
+function showWelcomeModal(user) {
+  document.getElementById('welcomeUserPic').src = user.image;
+  document.getElementById('welcomeName').innerText = `Welcome ${user.name}!`;
+  document.getElementById('welcomeRole').innerText = `Role: ${user.role}`;
+  document.getElementById('welcomeModal').style.display = 'flex';
+  setTimeout(closeWelcomeModal, 5000); // Auto close after 5s
+}
+function closeWelcomeModal() {
+  document.getElementById('welcomeModal').style.display = 'none';
+}
+function logout(){ document.getElementById('dashboard').style.display='none'; document.getElementById('loginPage').style.display='flex'; }
+function showSection(section){ ['home','profiles','calendar','social','resources'].forEach(sec=>document.getElementById(sec).style.display='none'); document.getElementById(section).style.display='block'; }
+function toggleDarkMode(){ document.body.classList.toggle('dark-mode'); }
+/* MODALS */
+function openModal(name,role,grade,email){ document.getElementById('modalName').innerText=name; document.getElementById('modalRole').innerText="Role: "+role; document.getElementById('modalGrade').innerText=grade?("Grade: "+grade):""; document.getElementById('modalEmail').innerText=email?("Email: "+email):""; document.getElementById('memberModal').style.display='flex'; }
+function closeModal(){ document.getElementById('memberModal').style.display='none'; }
+/* STORIES */
+function loadHome(){
+  const container = document.getElementById('storiesContainer');
+  container.innerHTML = '';
+  stories.forEach((story, i) => {
+    const card = document.createElement('div');
+    card.className = 'story-card';
+    card.innerHTML = `
+      <img src="${story.image}" alt="${story.title}">
+      <div class="caption">${story.title}</div>
+      <button class="share-btn" onclick="event.stopPropagation(); toggleShare(this)">Share</button>
+      <div class="share-icons">
+        <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="imessage"><i class="fas fa-comment"></i></a>
+        <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
+      </div>
+    `;
+    card.onclick = () => openStory(i);
+    container.appendChild(card);
+    setShareLinks(card, story.title, story.content, story.image);
+  });
+
+  const updateList = document.getElementById('updateList');
+  updateList.innerHTML = '';
+  updates.forEach(u => {
+    const li = document.createElement('li');
+    li.textContent = u;
+    updateList.appendChild(li);
+  });
+}
+
+function openStory(index) {
+  currentStoryIndex = index;
+  const story = stories[index];
+  document.getElementById('storyTitle').innerText = story.title;
+  document.getElementById('storyContent').innerText = story.content;
+  document.getElementById('prevStoryBtn').style.display = (index > 0) ? 'block' : 'none';
+  document.getElementById('nextStoryBtn').style.display = (index < stories.length - 1) ? 'block' : 'none';
+  document.getElementById('storyModal').style.display = 'flex';
+}
+function prevStory() {
+  if (currentStoryIndex > 0) {
+    openStory(currentStoryIndex - 1);
+  }
+}
+function nextStory() {
+  if (currentStoryIndex < stories.length - 1) {
+    openStory(currentStoryIndex + 1);
+  }
+}
+function closeStory(){ document.getElementById('storyModal').style.display='none'; }
+function toggleShare(btn) {
+  event.stopPropagation();
+  const icons = btn.nextElementSibling;
+  icons.style.display = icons.style.display === 'flex' ? 'none' : 'flex';
+}
+function setShareLinks(card, title, content, image) {
+  const text = encodeURIComponent(`${title}: ${content}`);
+  const img = encodeURIComponent(image);
+  card.querySelector('a.whatsapp').href = `https://wa.me/?text=${text}%20${img}`;
+  card.querySelector('a.imessage').href = `sms:&body=${text}%20${img}`;
+  card.querySelector('a.facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${img}&quote=${text}`;
+  card.querySelector('a.twitter').href = `https://twitter.com/intent/tweet?text=${text}%20${img}`;
+  card.querySelector('a.instagram').href = img;
+}
+function officerAddStory(){
+  const title = prompt("Story Title:");
+  if(!title) return;
+  const content = prompt("Story Content:");
+  if(!content) return;
+  const image = prompt("Image URL (optional):") || "https://via.placeholder.com/80?text=FBLA";
+  stories.push({title, content, image});
+  localStorage.setItem('stories', JSON.stringify(stories));
+  loadHome();
+}
+function officerAddUpdate(){
+  const update = prompt("New Update:");
+  if(update){ updates.push(update); localStorage.setItem('updates', JSON.stringify(updates)); loadHome(); }
+}
+/* PROFILES */
+function loadProfiles(){
+  const list = document.getElementById('profileList');
+  list.innerHTML = '';
+  users.forEach(u => {
+    const div = document.createElement('div');
+    div.className = 'member-profile';
+    div.innerHTML = `<img src="${u.image}" alt="${u.name}"><span class="name">${u.name}</span>${u.role==='officer'?'<span class="badge">Officer</span>':''}`;
+    div.onclick = () => openModal(u.name, u.role, null, u.email);
+    list.appendChild(div);
+  });
+}
+/* CALENDAR */
+function generateCalendar(date){
+  const month = date.getMonth();
+  const year = date.getFullYear();
+  const label = document.getElementById('monthLabel');
+  const container = document.getElementById('calendarContainer');
+  label.textContent = date.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`;
+
+  let html = `<table class="calendar"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>`;
+  for(let i=0; i<firstDay; i++) html += '<td></td>';
+  for(let day=1; day<=daysInMonth; day++){
+    const key = `${year}-${month+1}-${day}`;
+    const event = calendarEvents.find(e => e.date === key);
+    const isToday = key === todayStr;
+    const classes = event ? 'event' : '';
+    const tooltip = event ? event.event : '';
+    const onclick = event ? `onclick="showEvent('${tooltip}')"` : '';
+    html += `<td class="${classes} ${isToday?'today':''}" ${tooltip?`data-tooltip="${tooltip}"`:''} ${onclick}>${day}</td>`;
+    if((firstDay + day) % 7 === 0) html += '</tr><tr>';
+  }
+  html += '</tr></table>';
+  container.innerHTML = html;
+}
+function showEvent(event) {
+  document.getElementById('eventDetails').innerText = event;
+  document.getElementById('eventModal').style.display = 'flex';
+}
+function closeEventModal() {
+  document.getElementById('eventModal').style.display = 'none';
+}
+function officerAddEvent() {
+  const date = prompt("Enter date (YYYY-MM-DD):");
+  if (!date) return;
+  const eventName = prompt("Enter event name:");
+  if (!eventName) return;
+  calendarEvents.push({ date, event: eventName });
+  localStorage.setItem('calendarEvents', JSON.stringify(calendarEvents));
+  generateCalendar(currentMonth);
+}
+function prevMonth(){ currentMonth.setMonth(currentMonth.getMonth()-1); generateCalendar(currentMonth); }
+function nextMonth(){ currentMonth.setMonth(currentMonth.getMonth()+1); generateCalendar(currentMonth); }
+/* COUNTDOWN */
+function startCountdown(){
+  const upcoming = calendarEvents
+    .filter(e => new Date(e.date) > new Date())
+    .sort((a,b) => new Date(a.date) - new Date(b.date))[0];
+
+  const eventLink = document.getElementById('countdownEvent');
+  const countdownEl = document.getElementById('countdown');
+  if(upcoming){
+    eventLink.innerHTML = `<a href="#" onclick="showSection('calendar')">${upcoming.event}</a>`;
+    const target = new Date(upcoming.date);
+    const interval = setInterval(() => {
+      const diff = target - new Date();
+      if(diff < 0){ countdownEl.innerText = 'Event Started!'; clearInterval(interval); return; }
+      const d = Math.floor(diff/(1000*60*60*24));
+      const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+      const m = Math.floor((diff%(1000*60*60))/(1000*60));
+      const s = Math.floor((diff%(1000*60))/1000);
+      countdownEl.innerText = `${d}d ${h}h ${m}m ${s}s`;
+    }, 1000);
+  } else {
+    eventLink.innerHTML = `<a href="#" onclick="showSection('calendar')">No upcoming events</a>`;
+    countdownEl.innerText = '';
+  }
+}
+/* INBOX */
+function openInbox(){ document.getElementById('dashboard').style.display='none'; document.getElementById('inboxPage').style.display='block'; renderInbox(); }
+function backToHome(){ document.getElementById('inboxPage').style.display='none'; document.getElementById('dashboard').style.display='block'; }
+function renderInbox(){
+  const list = document.getElementById('inboxList');
+  list.innerHTML = '';
+  messages.forEach((m, i) => {
+    const div = document.createElement('div');
+    div.className = 'inbox-message';
+    div.innerHTML = `<strong>[${m.sender}]</strong> ${m.text}`;
+    const reply = document.createElement('button');
+    reply.className = 'reply-btn';
+    reply.textContent = 'Reply';
+    reply.onclick = () => replyToMessage(m.sender);
+    const del = document.createElement('button');
+    del.className = 'reply-btn';
+    del.textContent = 'Delete';
+    del.style.right = '50px';
+    del.onclick = () => { messages.splice(i,1); localStorage.setItem('messages', JSON.stringify(messages)); renderInbox(); };
+    div.appendChild(reply); div.appendChild(del);
+    list.appendChild(div);
+  });
+}
+function sendInboxMessage(){
+  const text = document.getElementById('inboxInput').value.trim();
+  if(text){ messages.push({sender: currentUser.name, text}); localStorage.setItem('messages', JSON.stringify(messages)); document.getElementById('inboxInput').value=''; renderInbox(); }
+}
+function replyToMessage(sender){
+  const text = prompt(`Reply to ${sender}:`);
+  if(text){ messages.push({sender: currentUser.name, text: `@${sender} ${text}`}); localStorage.setItem('messages', JSON.stringify(messages)); renderInbox(); }
+}
+/* REMINDERS */
+function addReminder(text){
+  const li = document.createElement('li');
+  li.textContent = text;
+  document.getElementById('reminderList').appendChild(li);
+}
+addReminder("Submit membership dues by Dec 1");
+addReminder("Prepare for Regionals in January");
+addReminder("Complete 10 service hours this semester");
+</script>
+</body>
+</html>
